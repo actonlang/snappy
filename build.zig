@@ -47,12 +47,20 @@ pub fn build(b: *std.build.Builder) void {
     );
     lib.addConfigHeader(config_header);
 
+    const public_header = b.addConfigHeader(
+        .{
+            .style = .{ .cmake = .{ .path = "snappy-stubs-public.h.in" } },
+            .include_path = "snappy-stubs-public.h",
+        },
+        .{
+            .HAVE_SYS_UIO_H_01 = true,
+        },
+    );
+    lib.addConfigHeader(public_header);
+
     flags.appendSlice(&.{
         "-std=c++11",
-    }) catch |err| {
-        std.log.err("Error appending iterable dir: {}", .{err});
-        std.os.exit(1);
-    };
+    }) catch unreachable;
 
     const source_files = [_][]const u8{
         "snappy-c.cc",
