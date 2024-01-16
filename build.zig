@@ -63,6 +63,9 @@ pub fn build(b: *std.build.Builder) void {
     }) catch unreachable;
 
     const source_files = [_][]const u8{
+        "snappy-sinksource.cc",
+        "snappy-stubs-internal.cc",
+        "snappy.cc",
         "snappy-c.cc",
     };
 
