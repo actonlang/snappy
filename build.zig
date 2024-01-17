@@ -58,9 +58,9 @@ pub fn build(b: *std.build.Builder) void {
     );
     lib.addConfigHeader(public_header);
 
-    flags.appendSlice(&.{
-        "-std=c++11",
-    }) catch unreachable;
+    //flags.appendSlice(&.{
+    //    "-std=c++11",
+    //}) catch unreachable;
 
     const source_files = [_][]const u8{
         "snappy-sinksource.cc",
