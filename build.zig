@@ -4,6 +4,7 @@ const print = @import("std").debug.print;
 pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
     const target = b.standardTargetOptions(.{});
+    const t = target.result;
 
     var flags = std.ArrayList([]const u8).init(b.allocator);
     defer flags.deinit();
@@ -53,7 +54,7 @@ pub fn build(b: *std.Build) void {
             .include_path = "snappy-stubs-public.h",
         },
         .{
-            .HAVE_SYS_UIO_H_01 = true,
+            .HAVE_SYS_UIO_H_01 = if (t.os.tag == .windows) false else true,
         },
     );
     lib.addConfigHeader(public_header);
