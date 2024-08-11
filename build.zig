@@ -14,7 +14,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-    lib.addIncludePath(.{ .path = "." });
+    lib.addIncludePath(b.path("."));
 
     //const libsnappy_version = "1.1.10";
 
@@ -50,7 +50,7 @@ pub fn build(b: *std.Build) void {
 
     const public_header = b.addConfigHeader(
         .{
-            .style = .{ .cmake = .{ .path = "snappy-stubs-public.h.in" } },
+            .style = .{ .cmake = b.path("snappy-stubs-public.h.in") },
             .include_path = "snappy-stubs-public.h",
         },
         .{
@@ -72,7 +72,7 @@ pub fn build(b: *std.Build) void {
 
     lib.linkLibC();
     lib.linkLibCpp();
-    lib.installHeader("snappy-c.h", "snappy-c.h");
+    lib.installHeader(b.path("snappy-c.h"), "snappy-c.h");
     lib.addCSourceFiles(.{
         .files = &source_files,
         .flags = flags.items
